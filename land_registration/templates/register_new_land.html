@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+   
+
+   {% block content %}
+
+    <div class="container">
+
+        <h1>Land Registration</h1>
+
+        <h3 id="number_of_registed_land"></h3>
+
+<!--        <label for="user_address" class="col-lg-3 control-label"></label>-->
+        <label for="user_address" class="control-label">User Address</label>
+        <input id="user_address" type="text">
+        
+        <label for="name" class="control-label">User Name</label>
+        <input id="name" type="text">
+        
+        <label for="city" class="control-label">City</label>
+        <input id="city" type="text">
+        
+        <label for="address" class="control-label">Address</label>
+        <input id="address" type="text">
+        
+        <label for="latitude" class="control-label">Latitude</label>
+        <input id="latitude" type="text">
+        
+        <label for="longitude" class="control-label">Longitude</label>
+        <input id="longitude" type="text">
+
+       <br>
+        <button class="btn"  id="button">Register Land</button>
+
+
+    </div>
+
+
+    <script>
+         
+        LandContract.getNumberOfLandRegistered(function(error, result){
+            if(!error)
+                {
+                    $("#number_of_registed_land").html(result+' Land Registered');
+                    console.log(result);
+                }
+            else
+                console.error(error);
+        });
+
+        $("#button").click(function() {
+            console.log(web3.eth.getBalance("0xff14fd58b5f6e2101ed5f90b1035d8c185c0bafa"))
+            console.log( web3.eth.accounts[0])
+//            LandContract.registerLand("0xff14fd58b5f6e2101ed5f90b1035d8c185c0bafa", "Rajat", "MZN", "Sadar", "333", "44",{from: web3.eth.accounts[0], gas:3000000});
+            LandContract.registerLand(
+                $("#user_address").val(),
+                $("#name").val(),
+                $("#city").val(),
+                $("#address").val(),
+                $("#latitude").val(),
+                $("#longitude").val(),
+                {from: web3.eth.accounts[0], gas:3000000}
+            );
+            console.log("Registering land");
+        });
+
+    </script>
+
+{% endblock %}

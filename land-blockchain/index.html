@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Land Registration</title>
+
+    <link rel="stylesheet" type="text/css" href="main.css">
+
+    <script src="web3.min.js"></script>
+
+</head>
+<body>
+    <div class="container">
+
+        <h1>Land Registration</h1>
+
+        <h2 id="number_of_registed_land"></h2>
+
+        <label for="user_address" class="col-lg-2 control-label">User Address</label>
+        <input id="user_address" type="text">
+        
+        <label for="name" class="col-lg-2 control-label">User Name</label>
+        <input id="name" type="text">
+        
+        <label for="city" class="col-lg-2 control-label">City</label>
+        <input id="city" type="text">
+        
+        <label for="address" class="col-lg-2 control-label">Address</label>
+        <input id="address" type="text">
+        
+        <label for="latitude" class="col-lg-2 control-label">Latitude</label>
+        <input id="latitude" type="text">
+        
+        <label for="longitude" class="col-lg-2 control-label">Longitude</label>
+        <input id="longitude" type="text">
+
+        <button id="button">Register Land</button>
+
+
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+
+     <script>
+
+        if (typeof web3 !== 'undefined') {
+            web3 = new Web3(web3.currentProvider);
+        } else {
+            // set the provider you want from Web3.providers
+            web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
+        }
+        web3.eth.defaultAccount = web3.eth.accounts[0];
+//        var CoursetroContract = web3.eth.contract(PASTE ABI HERE!);
+//var Coursetro = CoursetroContract.at('PASTE CONTRACT ADDRESS HERE');
+        var CoursetroContract = web3.eth.contract([
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_owner_address",
+				"type": "address"
+			},
+			{
+				"name": "_x",
+				"type": "uint256"
+			}
+		],
+		"name": "add_property",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "_address",
+				"type": "address"
+			}
+		],
+		"name": "get_property",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256[]"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "getRegisteredLandList",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256[]"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "getNumberOfLandRegistered",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "landList",
+		"outputs": [
+			{
+				"name": "id",
+				"type": "uint256"
+			},
+			{
+				"name": "owner",
+				"type": "address"
+			},
+			{
+				"name": "name",
+				"type": "string"
+			},
+			{
+				"name": "city",
+				"type": "string"
+			},
+			{
+				"name": "land_address",
+				"type": "string"
+			},
+			{
+				"name": "latitude",
+				"type": "string"
+			},
+			{
+				"name": "longitude",
+				"type": "string"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_landOwner",
+				"type": "address"
+			},
+			{
+				"name": "_name",
+				"type": "string"
+			},
+			{
+				"name": "_city",
+				"type": "string"
+			},
+			{
+				"name": "_land_address",
+				"type": "string"
+			},
+			{
+				"name": "_latitude",
+				"type": "string"
+			},
+			{
+				"name": "_longitude",
+				"type": "string"
+			}
+		],
+		"name": "registerLand",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"name": "_id",
+				"type": "uint256"
+			},
+			{
+				"indexed": true,
+				"name": "_landOwner",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"name": "_ownerName",
+				"type": "string"
+			},
+			{
+				"indexed": false,
+				"name": "_city",
+				"type": "string"
+			},
+			{
+				"indexed": false,
+				"name": "land_address",
+				"type": "string"
+			},
+			{
+				"indexed": false,
+				"name": "latitude",
+				"type": "string"
+			},
+			{
+				"indexed": false,
+				"name": "longitude",
+				"type": "string"
+			}
+		],
+		"name": "registerLandEvent",
+		"type": "event"
+	}
+]);
+         
+var LandContract = CoursetroContract.at('0x74c43b66bfcec21a4a7e3b8da65093f81fd2dcc6');
+        console.log(LandContract);
+         
+         
+        LandContract.getNumberOfLandRegistered(function(error, result){
+            if(!error)
+                {
+                    $("#number_of_registed_land").html(result+' Land Registered');
+                    console.log(result);
+                }
+            else
+                console.error(error);
+        });
+
+        $("#button").click(function() {
+            console.log(web3.eth.getBalance("0xff14fd58b5f6e2101ed5f90b1035d8c185c0bafa"))
+            console.log( web3.eth.accounts[0])
+//            LandContract.registerLand("0xff14fd58b5f6e2101ed5f90b1035d8c185c0bafa", "Rajat", "MZN", "Sadar", "333", "44",{from: web3.eth.accounts[0], gas:3000000});
+            LandContract.registerLand(
+                $("#user_address").val(),
+                $("#name").val(),
+                $("#city").val(),
+                $("#address").val(),
+                $("#latitude").val(),
+                $("#longitude").val(),
+                {from: web3.eth.accounts[0], gas:3000000}
+            );
+            console.log("Registering land");
+        });
+
+    </script>
+</body>
+</html>

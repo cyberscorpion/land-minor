@@ -1,0 +1,22 @@
+{
+  "name": "land-blockchain",
+  "version": "1.0.0",
+  "description": "A Blockchain Project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cyberscorpion/land-blockchain.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cyberscorpion/land-blockchain/issues"
+  },
+  "homepage": "https://github.com/cyberscorpion/land-blockchain#readme",
+  "dependencies": {
+    "web3": "^0.20.6"
+  }
+}
