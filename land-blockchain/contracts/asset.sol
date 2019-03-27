@@ -11,10 +11,13 @@ contract land_bargain {
       string land_address;
       string latitude;
       string longitude;
+      uint value;
     }
     
     mapping(address => uint[]) owner_properties;
 
+    uint[] public land_availabe_to_sell;
+    
     function add_property(address _owner_address, uint _x) public {
         owner_properties[_owner_address].push(_x);
     }
@@ -23,6 +26,13 @@ contract land_bargain {
         return owner_properties[_address];
     }
     
+    function add_land_available_to_sell(uint _x) public{
+        land_availabe_to_sell.push(_x);
+    }
+    
+    function get_land_availabe_to_sell() view public returns(uint[]){
+        return land_availabe_to_sell;
+    }
     // State variables
     
     
@@ -36,14 +46,15 @@ contract land_bargain {
       string _city,
       string land_address,
       string latitude,
-      string longitude
+      string longitude,
+      uint value
     );
     
     // register land
     function registerLand(address _landOwner, string _name, string _city, string _land_address, string _latitude, string _longitude) public {
 
         // store the Land title
-        landList[landListCounter] = Land(landListCounter, _landOwner, _name, _city, _land_address, _latitude, _longitude);
+        landList[landListCounter] = Land(landListCounter, _landOwner, _name, _city, _land_address, _latitude, _longitude, 0);
         // owner_properties[_landOwner].push(landListCounter);
         add_property(_landOwner, landListCounter);
         landListCounter++;

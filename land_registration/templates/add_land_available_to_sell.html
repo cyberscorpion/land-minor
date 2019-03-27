@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+   
+
+   {% block content %}
+
+    <div class="container">
+
+        <h3>Land added to the selling list</h3>
+
+<!--
+        <h3 id="number_of_registed_land"></h3>
+
+        <label for="user_address" class="control-label">User Address</label>
+        <input id="user_address" type="text">
+        <br>
+        <button class="btn" id="button">Get Details</button>
+-->
+    </div>
+    
+<!--
+    <div>
+        <table class="table" id="detail-table">
+           
+        </table>
+    </div>
+-->
+
+    <script>
+         
+//        LandContract.getNumberOfLandRegistered(function(error, result){
+//            if(!error)
+//                {
+//                    $("#number_of_registed_land").html(result+' Land Registered');
+//                    console.log(result);
+//                }
+//            else
+//                console.error(error);
+//        });
+
+//        $("#button").click(function() {
+
+            var x = LandContract.add_land_available_to_sell({{land_number}}, {from: web3.eth.accounts[0], gas:3000000});
+            console.log("land added");
+//        });
+
+    </script>
+
+{% endblock %}

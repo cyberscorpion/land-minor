@@ -29,7 +29,8 @@
         web3.eth.defaultAccount = web3.eth.accounts[0];
 //        var CoursetroContract = web3.eth.contract(PASTE ABI HERE!);
 //var Coursetro = CoursetroContract.at('PASTE CONTRACT ADDRESS HERE');
-        var CoursetroContract = web3.eth.contract([
+        var CoursetroContract = web3.eth.contract(
+[
 	{
 		"constant": false,
 		"inputs": [
@@ -70,11 +71,44 @@
 	{
 		"constant": true,
 		"inputs": [],
+		"name": "get_land_availabe_to_sell",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256[]"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
 		"name": "getRegisteredLandList",
 		"outputs": [
 			{
 				"name": "",
 				"type": "uint256[]"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "land_availabe_to_sell",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
 			}
 		],
 		"payable": false,
@@ -132,10 +166,28 @@
 			{
 				"name": "longitude",
 				"type": "string"
+			},
+			{
+				"name": "value",
+				"type": "uint256"
 			}
 		],
 		"payable": false,
 		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_x",
+				"type": "uint256"
+			}
+		],
+		"name": "add_land_available_to_sell",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
 		"type": "function"
 	},
 	{
@@ -209,14 +261,20 @@
 				"indexed": false,
 				"name": "longitude",
 				"type": "string"
+			},
+			{
+				"indexed": false,
+				"name": "value",
+				"type": "uint256"
 			}
 		],
 		"name": "registerLandEvent",
 		"type": "event"
 	}
-]);
+]
+        );
          
-var LandContract = CoursetroContract.at('0x84b9332761c029334498ae8574d811fbc77440d8');
+var LandContract = CoursetroContract.at('0x2033fb8908ea259c757afdca35cab473f731e579');
         console.log(LandContract);
          
     </script>
@@ -272,6 +330,9 @@ var LandContract = CoursetroContract.at('0x84b9332761c029334498ae8574d811fbc7744
                 </li>
                 <li>
                     <a href="/user-land-details/">View Property Detail</a>
+                </li>
+                <li>
+                    <a href="/lands-available/">Properties Available</a>
                 </li>
             </ul>
 

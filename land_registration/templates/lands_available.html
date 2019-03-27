@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+   
+
+   {% block content %}
+
+    <div class="container">
+
+        <h1>Properties Available</h1>
+
+<!--        <h3 id="number_of_registed_land"></h3>-->
+
+    </div>
+    
+    <div>
+        <table class="table" id="detail-table">
+           
+        </table>
+    </div>
+
+    <script>
+         
+//        LandContract.getNumberOfLandRegistered(function(error, result){
+//            if(!error)
+//                {
+//                    $("#number_of_registed_land").html(result+' Land Registered');
+//                    console.log(result);
+//                }
+//            else
+//                console.error(error);
+//        });
+
+//        $("#button").click(function() {
+//            console.log(web3.eth.getBalance("0xff14fd58b5f6e2101ed5f90b1035d8c185c0bafa"))
+//            console.log( web3.eth.accounts[0])
+//            LandContract.registerLand("0xff14fd58b5f6e2101ed5f90b1035d8c185c0bafa", "Rajat", "MZN", "Sadar", "333", "44",{from: web3.eth.accounts[0], gas:3000000});
+            var x = LandContract.get_land_availabe_to_sell( );
+            $("#detail-table").html( 
+                `<tr>
+                <th>Name</th>
+                <th>City</th>
+                <th>Address</th>
+                <th>Latitude</th>
+                <th>Longitude</th>
+            </tr>`);
+            console.log(x);
+            for(i in x){
+                var temp = LandContract.landList(x[i].c[0]);
+                console.log(temp);
+                var markup = `<tr>
+                    <td>${temp[2]}</td>
+                    <td>${temp[3]}</td>
+                    <td>${temp[4]}</td>
+                    <td>${temp[5]}</td>
+                    <td>${temp[6]}</td>
+                            </tr>`;
+                $("#detail-table").append(markup);
+//            console.log(x[i].c[0]);
+                
+            }
+//        });
+
+    </script>
+
+{% endblock %}
