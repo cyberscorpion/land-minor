@@ -50,6 +50,44 @@
 		"type": "function"
 	},
 	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_landOwner",
+				"type": "address"
+			},
+			{
+				"name": "_name",
+				"type": "string"
+			},
+			{
+				"name": "_city",
+				"type": "string"
+			},
+			{
+				"name": "_area",
+				"type": "string"
+			},
+			{
+				"name": "_land_address",
+				"type": "string"
+			},
+			{
+				"name": "_latitude",
+				"type": "string"
+			},
+			{
+				"name": "_longitude",
+				"type": "string"
+			}
+		],
+		"name": "registerLand",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
 		"constant": true,
 		"inputs": [
 			{
@@ -156,6 +194,10 @@
 				"type": "string"
 			},
 			{
+				"name": "area",
+				"type": "string"
+			},
+			{
 				"name": "land_address",
 				"type": "string"
 			},
@@ -191,40 +233,6 @@
 		"type": "function"
 	},
 	{
-		"constant": false,
-		"inputs": [
-			{
-				"name": "_landOwner",
-				"type": "address"
-			},
-			{
-				"name": "_name",
-				"type": "string"
-			},
-			{
-				"name": "_city",
-				"type": "string"
-			},
-			{
-				"name": "_land_address",
-				"type": "string"
-			},
-			{
-				"name": "_latitude",
-				"type": "string"
-			},
-			{
-				"name": "_longitude",
-				"type": "string"
-			}
-		],
-		"name": "registerLand",
-		"outputs": [],
-		"payable": false,
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
 		"anonymous": false,
 		"inputs": [
 			{
@@ -245,6 +253,11 @@
 			{
 				"indexed": false,
 				"name": "_city",
+				"type": "string"
+			},
+			{
+				"indexed": false,
+				"name": "_area",
 				"type": "string"
 			},
 			{
@@ -274,7 +287,7 @@
 ]
         );
          
-var LandContract = CoursetroContract.at('0x2033fb8908ea259c757afdca35cab473f731e579');
+var LandContract = CoursetroContract.at('0x45376b922eb6e52584ad1480aefd1574a810b656');
         console.log(LandContract);
          
     </script>

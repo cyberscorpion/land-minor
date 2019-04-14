@@ -17,7 +17,20 @@
         <input id="name" type="text">
         
         <label for="city" class="control-label">City</label>
-        <input id="city" type="text">
+        <select name="city" id="city">
+            <option value="">Select City</option>
+            <option value="Noida">Noida</option>
+            <option value="New Delhi">New Delhi</option>
+            <option value="Gurugram">Gurugram</option>
+        </select>
+
+        <label for="area" class="control-label">Area</label>
+        <select name="area" id="area">
+            <option value="sector1">Sector 1</option>
+            <option value="sector2">Sector 2</option>
+            <option value="sector3">Sector 3</option>
+            <option value="sector4">Sector 4</option>
+        </select>
         
         <label for="address" class="control-label">Address</label>
         <input id="address" type="text">
@@ -30,7 +43,6 @@
 
        <br>
         <button class="btn"  id="button">Register Land</button>
-
 
     </div>
 
@@ -55,6 +67,7 @@
                 $("#user_address").val(),
                 $("#name").val(),
                 $("#city").val(),
+                $("#area").val(),
                 $("#address").val(),
                 $("#latitude").val(),
                 $("#longitude").val(),
