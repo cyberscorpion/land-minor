@@ -35,6 +35,24 @@
 		"constant": false,
 		"inputs": [
 			{
+				"name": "_x",
+				"type": "uint256"
+			},
+			{
+				"name": "_value",
+				"type": "uint256"
+			}
+		],
+		"name": "add_land_available_to_sell",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
 				"name": "_owner_address",
 				"type": "address"
 			},
@@ -88,6 +106,72 @@
 		"type": "function"
 	},
 	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"name": "_id",
+				"type": "uint256"
+			},
+			{
+				"indexed": true,
+				"name": "_landOwner",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"name": "_ownerName",
+				"type": "string"
+			},
+			{
+				"indexed": false,
+				"name": "_city",
+				"type": "string"
+			},
+			{
+				"indexed": false,
+				"name": "_area",
+				"type": "string"
+			},
+			{
+				"indexed": false,
+				"name": "land_address",
+				"type": "string"
+			},
+			{
+				"indexed": false,
+				"name": "latitude",
+				"type": "string"
+			},
+			{
+				"indexed": false,
+				"name": "longitude",
+				"type": "string"
+			},
+			{
+				"indexed": false,
+				"name": "value",
+				"type": "uint256"
+			}
+		],
+		"name": "registerLandEvent",
+		"type": "event"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "get_land_availabe_to_sell",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256[]"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
 		"constant": true,
 		"inputs": [
 			{
@@ -109,11 +193,11 @@
 	{
 		"constant": true,
 		"inputs": [],
-		"name": "get_land_availabe_to_sell",
+		"name": "getNumberOfLandRegistered",
 		"outputs": [
 			{
 				"name": "",
-				"type": "uint256[]"
+				"type": "uint256"
 			}
 		],
 		"payable": false,
@@ -143,20 +227,6 @@
 			}
 		],
 		"name": "land_availabe_to_sell",
-		"outputs": [
-			{
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"constant": true,
-		"inputs": [],
-		"name": "getNumberOfLandRegistered",
 		"outputs": [
 			{
 				"name": "",
@@ -217,77 +287,10 @@
 		"payable": false,
 		"stateMutability": "view",
 		"type": "function"
-	},
-	{
-		"constant": false,
-		"inputs": [
-			{
-				"name": "_x",
-				"type": "uint256"
-			}
-		],
-		"name": "add_land_available_to_sell",
-		"outputs": [],
-		"payable": false,
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"anonymous": false,
-		"inputs": [
-			{
-				"indexed": true,
-				"name": "_id",
-				"type": "uint256"
-			},
-			{
-				"indexed": true,
-				"name": "_landOwner",
-				"type": "address"
-			},
-			{
-				"indexed": false,
-				"name": "_ownerName",
-				"type": "string"
-			},
-			{
-				"indexed": false,
-				"name": "_city",
-				"type": "string"
-			},
-			{
-				"indexed": false,
-				"name": "_area",
-				"type": "string"
-			},
-			{
-				"indexed": false,
-				"name": "land_address",
-				"type": "string"
-			},
-			{
-				"indexed": false,
-				"name": "latitude",
-				"type": "string"
-			},
-			{
-				"indexed": false,
-				"name": "longitude",
-				"type": "string"
-			},
-			{
-				"indexed": false,
-				"name": "value",
-				"type": "uint256"
-			}
-		],
-		"name": "registerLandEvent",
-		"type": "event"
 	}
-]
-        );
+]        );
          
-var LandContract = CoursetroContract.at('0x45376b922eb6e52584ad1480aefd1574a810b656');
+var LandContract = CoursetroContract.at('0xdd5980e9ba671d3f6c100bdbb9d3c32072ab125c');
         console.log(LandContract);
          
     </script>
@@ -325,10 +328,10 @@ var LandContract = CoursetroContract.at('0x45376b922eb6e52584ad1480aefd1574a810b
                 </li>
                 <li>
                     <a href="#">About</a>
-                    <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Pages</a>
+                    <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Extra</a>
                     <ul class="collapse list-unstyled" id="pageSubmenu">
                         <li>
-                            <a href="#">Page 1</a>
+                            <a href="/load-data/">Load Data</a>
                         </li>
                         <li>
                             <a href="#">Page 2</a>

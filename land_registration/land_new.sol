@@ -27,7 +27,8 @@ contract land_bargain {
         return owner_properties[_address];
     }
     
-    function add_land_available_to_sell(uint _x) public{
+    function add_land_available_to_sell(uint _x, uint _value) public{
+        landList[_x].value = _value;
         land_availabe_to_sell.push(_x);
     }
     
@@ -87,6 +88,11 @@ contract land_bargain {
 
       return (registeredLandList);
     }
+    
+    // function getcheck() public returns(string){
+    //     landList[0].value = 9898;
+    //     return landList[0].name;
+    // }
     
 //     struct PropertyDetail {
 // // 		Status status;
