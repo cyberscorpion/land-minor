@@ -12,6 +12,8 @@ def user_land_details(request):
 
 def lands_available(request):
     return render(request, 'lands_available.html')
+def dashboard_home(request):
+    return render(request, 'dashboard_home.html')
 
 def load_data(request):
     if request.method == 'POST':
@@ -38,3 +40,6 @@ def bidding(request,pk):
     }
     return render(request, 'bid.html',context)
 
+def bidding_home_page(request, pk):
+    # do work
+    return render(request, 'bid.html',context)

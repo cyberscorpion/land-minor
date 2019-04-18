@@ -290,7 +290,7 @@
 	}
 ]        );
          
-var LandContract = CoursetroContract.at('0xdd5980e9ba671d3f6c100bdbb9d3c32072ab125c');
+var LandContract = CoursetroContract.at('0x8037238afb9178701b20ff150d11d745dbe20607');
         console.log(LandContract);
          
     </script>
@@ -313,7 +313,7 @@ var LandContract = CoursetroContract.at('0xdd5980e9ba671d3f6c100bdbb9d3c32072ab1
             <ul class="list-unstyled components">
                 <p>Welcome</p>
                 <li class="active">
-                    <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Home</a>
+                    <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">User</a>
                     <ul class="collapse list-unstyled" id="homeSubmenu">
                         <li>
                             <a href="#">Home 1</a>
@@ -357,7 +357,15 @@ var LandContract = CoursetroContract.at('0xdd5980e9ba671d3f6c100bdbb9d3c32072ab1
                     <a href="#" class="download"> source</a>
                 </li>
                 <li>
-                    <a href="#" class="article">Log Out</a>
+
+                    {% if not user.is_authenticated %}
+
+                    <a href="/user/login" class="article">Log In</a>
+    {% else %}
+                    <a href="/user/logout" class="article">Log Out</a>
+       {% endif %}
+
+
                 </li>
             </ul>
         </nav>
