@@ -1,7 +1,9 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-import json
+from django.contrib.auth.decorators import login_required
 
+import json
+from .models import *
 def home(request):
     return render(request, 'home.html')
 def register_new_land(request):
@@ -34,12 +36,31 @@ def add_land_available_to_sell(request,pk):
     }
     return render(request, 'add_land_available_to_sell.html',context)
 
+@login_required(login_url='/user/login')
 def bidding(request,pk):
     context ={
         "land_number": pk,
+        "bidder_address": request.user.account_address,
     }
+    land_obj = Land.objects.filter(land_id = pk)
+    if land_obj.exists():
+        land_obj = land_obj.first()
+        land_bid_obj = land_obj.lands.all()[0] # have to fetch the latest bid
+        context['land'] = land_bid_obj
     return render(request, 'bid.html',context)
 
-def bidding_home_page(request, pk):
-    # do work
-    return render(request, 'bid.html',context)
+@login_required(login_url='/user/login')
+def save_bid(request):
+    if request.method == 'POST':
+        context ={}
+        bid_land_obj = BidLand.objects.get(id = request.POST.get('id'))
+#        print(bid_land_obj,request.POST.get('value'), request.POST.get('address'), request.POST.get('itter'))
+        Bid.objects.create(land = bid_land_obj, value =  request.POST.get('value'), account =  request.POST.get('address'), itter =  request.POST.get('itter') )
+    return render(request, 'save_bid.html',context)
+
+# for logged in user
+@login_required(login_url='/user/login')
+def lands_available_db(request):
+    context = {}
+    context['lands'] = BidLand.objects.all()
+    return render(request,'db/land_available_db.html', context)

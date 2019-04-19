@@ -5,47 +5,32 @@
     <div class="container">
 
         <h3 id="">Bid Land</h3>
-        <label for="value">Address</label>
-        <input type="text" id="value">
+           <p>
+            Owner Price: {{land.price}} <br>
+
+            Itteration: {{land.itter}}
+
+        </p>
+        <form action="/bid/save/" method="post">
+            {% csrf_token %}
+        <label for="address">Address</label>
+        <input type="text" name = "address" id="address" readonly value = {{bidder_address}}>
+        <label for="itter">Itteration</label>
+        <input type="text" name = "itter" id="itter" readonly value = {{land.itter}}>
+<label for="=id">Bid Id</label>
+        <input type="text" name = "id" id="id" readonly value = {{land.id}}>
 
         <label for="value">Value</label>
-        <input type="number" id="value">
+        <input type="number" id="value" name = "value">
+        <button class="btn btn-success" type="submit" id="register_button">Bid</button>
+        </form>
 
         <br>
-        <button class="btn btn-success" id="register_button">Put Bid</button>
         <br>
 
         <div id="result"></div>
 
     </div>
 
-
-    <script>
-
-//        LandContract.getNumberOfLandRegistered(function(error, result){
-//            if(!error)
-//                {
-//                    $("#number_of_registed_land").html(result+' Land Registered');
-//                    console.log(result);
-//                }
-//            else
-//                console.error(error);
-//        });
-
-        $("#register_button").click(function() {
-            if ($("#value").val() == '' ){
-                console.log("error");
-            }
-            else{
-                console.log("success");
-                var value_land = parseInt($("#value").val());
-    //            LandContract.add_land_available_to_sell({{land_number}},value_land, {from: web3.eth.accounts[0], gas:3000000});
-                document.getElementById('result').innerHTML="Land added to the selling list";
-
-            }
-
-        });
-
-    </script>
 
 {% endblock %}

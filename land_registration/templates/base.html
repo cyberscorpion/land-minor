@@ -312,20 +312,6 @@ var LandContract = CoursetroContract.at('0x8037238afb9178701b20ff150d11d745dbe20
 
             <ul class="list-unstyled components">
                 <p>Welcome</p>
-                <li class="active">
-                    <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">User</a>
-                    <ul class="collapse list-unstyled" id="homeSubmenu">
-                        <li>
-                            <a href="#">Home 1</a>
-                        </li>
-                        <li>
-                            <a href="#">Home 2</a>
-                        </li>
-                        <li>
-                            <a href="#">Home 3</a>
-                        </li>
-                    </ul>
-                </li>
                 <li>
                     <a href="#">About</a>
                     <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Extra</a>
@@ -350,6 +336,23 @@ var LandContract = CoursetroContract.at('0x8037238afb9178701b20ff150d11d745dbe20
                 <li>
                     <a href="/lands-available/">Properties Available</a>
                 </li>
+                {% if user.is_authenticated %}
+
+                <li class="active">
+                    <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">User</a>
+                    <ul class="collapse list-unstyled" id="homeSubmenu">
+                        <li>
+                            <a href="#">Land Available</a>
+                        </li>
+                        <li>
+                            <a href="#">Home 2</a>
+                        </li>
+                        <li>
+                            <a href="#">Home 3</a>
+                        </li>
+                    </ul>
+                </li>
+                 {% endif %}
             </ul>
 
             <ul class="list-unstyled CTAs">
@@ -367,6 +370,7 @@ var LandContract = CoursetroContract.at('0x8037238afb9178701b20ff150d11d745dbe20
 
 
                 </li>
+
             </ul>
         </nav>
 

@@ -10,14 +10,20 @@ class Land(models.Model):
     land_address = models.CharField(max_length=100)
     latitude = models.CharField(max_length=100, null = True, blank = True)
     longitude = models.CharField(max_length=100, null = True, blank = True)
+    timestamp = models.DateTimeField(auto_now=True, null=True, blank=True)
+
     def __str__(self):
         return self.name
 
 class BidLand(models.Model):
     land = models.ForeignKey(Land ,on_delete = models.CASCADE, related_name = 'lands')
-    value = models.PositiveIntegerField()
+    price = models.PositiveIntegerField()
     owner = models.CharField(max_length=100)
     timestamp = models.DateTimeField(auto_now=True, null=True, blank=True)
+    itter = models.PositiveIntegerField(default = 1)
+    active = models.BooleanField(default = False)
+    sell_to = models.CharField(max_length=100, null = True, blank = True)
+    selling_value = models.PositiveIntegerField(null = True, blank = True)
 
     def __str__(self):
         return str(self.land.land_id)
@@ -28,3 +34,6 @@ class Bid(models.Model):
     account = models.CharField(max_length=100)
     buyer = models.BooleanField(default = True)
     itter = models.PositiveIntegerField(default = 0)
+    message = models.TextField(null = True, blank = True)
+    timestamp = models.DateTimeField(auto_now=True, null=True, blank=True)
+

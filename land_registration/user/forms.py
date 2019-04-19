@@ -61,7 +61,7 @@ class RegisterForm(forms.ModelForm):
         model = User
         fields = (
             'username',
-            'account',
+            'account_address',
             'name',
                  )
 

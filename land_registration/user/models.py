@@ -14,7 +14,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         ('android',('android')),
         ('ios',('ios')),
     )
-    account = models.CharField(max_length = 100)
+    account_address = models.CharField(max_length = 100)
     email = models.EmailField(_('email address'))
     username = models.CharField(_('username'),max_length = 50, unique=True)
     name = models.CharField(_('name'), max_length=30, blank=True)
