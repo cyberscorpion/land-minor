@@ -6,11 +6,21 @@
 
         <h3 id="">Bid Land</h3>
            <p>
-            Owner Price: {{land.price}} <br>
-
+            Owner Price: {{land.price}}
+            <br>
+            Token Money: {{land.token_money}}
+               <br>
+            Days to pay money: {{land.days}}
+            <br>
             Itteration: {{land.itter}}
 
         </p>
+
+        {% if land.itter > 1 %}
+            {{suggestion}}
+
+        {% endif %}
+
         <form action="/bid/save/" method="post">
             {% csrf_token %}
         <label for="address">Address</label>
@@ -22,6 +32,11 @@
 
         <label for="value">Value</label>
         <input type="number" id="value" name = "value">
+        <label for="token_money">Token Money</label>
+        <input type="number" id="token_money" name = "token_money">
+        <label for="days">Days</label>
+        <input type="number" id="days" name = "days">
+
         <button class="btn btn-success" type="submit" id="register_button">Bid</button>
         </form>
 

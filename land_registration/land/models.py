@@ -24,16 +24,20 @@ class BidLand(models.Model):
     active = models.BooleanField(default = False)
     sell_to = models.CharField(max_length=100, null = True, blank = True)
     selling_value = models.PositiveIntegerField(null = True, blank = True)
+    days = models.PositiveIntegerField(default = 30)
+    token_money = models.PositiveIntegerField(default = 0)
 
     def __str__(self):
         return str(self.land.land_id)
 
 class Bid(models.Model):
-    land = models.ForeignKey(BidLand ,on_delete = models.CASCADE, related_name = 'bidlands')
+    bid_land = models.ForeignKey(BidLand ,on_delete = models.CASCADE, related_name = 'bidlands')
     value = models.PositiveIntegerField()
     account = models.CharField(max_length=100)
     buyer = models.BooleanField(default = True)
     itter = models.PositiveIntegerField(default = 0)
     message = models.TextField(null = True, blank = True)
     timestamp = models.DateTimeField(auto_now=True, null=True, blank=True)
+    days = models.PositiveIntegerField(default = 30)
+    token_money = models.PositiveIntegerField(default = 0)
 
