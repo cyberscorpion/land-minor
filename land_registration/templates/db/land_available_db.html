@@ -24,19 +24,18 @@
                 <th></th>
             </tr>
 
-
-           {% for land in lands %}
+           {% for bid_land in bid_lands %}
               <tr>
-                 <td>{{land.land.name}}</td>
-                 <td>{{land.land.city}}</td>
-                 <td>{{land.land.area}}</td>
-                 <td>{{land.land.land_address}}</td>
-                 <td>{{land.token_money}}</td>
-                 <td>{{land.days}}</td>
-                 <td>{{land.land.latitude}}</td>
-                 <td>{{land.land.longitude}}</td>
-                 <td>{{land.price}}</td>
-               <td><a href="/bid/{{land.land.land_id}}" class="btn btn-primary">Bid</a></td>
+                 <td>{{bid_land.land.name}}</td>
+                 <td>{{bid_land.land.city}}</td>
+                 <td>{{bid_land.land.area}}</td>
+                 <td>{{bid_land.land.land_address}}</td>
+                 <td>{{bid_land.token_money}}</td>
+                 <td>{{bid_land.days}}</td>
+                 <td>{{bid_land.land.latitude}}</td>
+                 <td>{{bid_land.land.longitude}}</td>
+                 <td>{{bid_land.price}}</td>
+               <td><a href="/bid/{{bid_land.land.land_id}}" class="btn btn-primary">Bid</a></td>
               </tr>
            {% endfor %}
         </table>

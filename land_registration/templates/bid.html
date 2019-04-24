@@ -17,10 +17,16 @@
         </p>
 
         {% if land.itter > 1 %}
-            {{suggestion}}
-
+            Suggestion: {{suggestion}}
+            <br>
+            <br>
+            <h5><strong>Previous bid:</strong></h5>
+            Value: {{previous_bid.value}}
+            <br> Days: {{previous_bid.days}}
+            <br> Token Money: {{previous_bid.token_money}}
         {% endif %}
-
+        <br>
+        <br>
         <form action="/bid/save/" method="post">
             {% csrf_token %}
         <label for="address">Address</label>

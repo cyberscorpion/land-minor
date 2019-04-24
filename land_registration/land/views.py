@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 
 import json
+import math
 from .models import *
 def home(request):
     return render(request, 'home.html')
@@ -36,8 +37,31 @@ def add_land_available_to_sell(request,pk):
     }
     return render(request, 'add_land_available_to_sell.html',context)
 
-def optimization():
-    return "abc"
+def optimization(bid_land_obj, account_address):
+    objects = bid_land_obj.bidlands.filter(itter = bid_land_obj.itter -1)
+    owner_obj = objects.get(buyer = False)
+    buyer_obj = objects.filter(buyer = True)
+    return_text ="Error"
+    result = []
+    for obj in buyer_obj:
+        value_diff = owner_obj.value - obj.value
+        # make the value diff 0 if bid is higher than then required
+        if value_diff < 0:
+            value_diff = 0
+        days_diff = owner_obj.days - obj.days
+        if days_diff > 0:
+            days_diff = 0
+        token_money_diff = owner_obj.token_money - obj.token_money
+        if token_money_diff > 0:
+            token_money_diff = 0
+        result.append((obj.account, math.sqrt((value_diff)**2)))
+    result.sort(key = lambda x : x[1])
+    print(result)
+    if result[0][0]!=account_address:
+        return_text = "You should increase your bid."
+    else:
+        return_text = "You can decrease your bid."
+    return return_text
 
 @login_required(login_url='/user/login')
 def bidding(request,pk):
@@ -48,10 +72,11 @@ def bidding(request,pk):
     land_obj = Land.objects.filter(land_id = pk)
     if land_obj.exists():
         land_obj = land_obj.first()
-        land_bid_obj = land_obj.lands.all()[0] # have to fetch the latest bid
-        context['land'] = land_bid_obj
-        if land_bid_obj.itter > 1:
-            context['suggestion'] = optimization()
+        bid_land_obj = land_obj.lands.all()[0] # have to fetch the latest bid
+        context['land'] = bid_land_obj
+        if bid_land_obj.itter > 1:
+            context['suggestion'] = optimization(bid_land_obj, request.user.account_address)
+            context['previous_bid'] = bid_land_obj.bidlands.get(itter = bid_land_obj.itter -1, account = request.user.account_address)
     return render(request, 'bid.html',context)
 
 @login_required(login_url='/user/login')
@@ -82,5 +107,5 @@ def save_bid(request):
 @login_required(login_url='/user/login')
 def lands_available_db(request):
     context = {}
-    context['lands'] = BidLand.objects.all()
+    context['bid_lands'] = BidLand.objects.all()
     return render(request,'db/land_available_db.html', context)
