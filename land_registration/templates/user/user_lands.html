@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+
+
+   {% block content %}
+
+    <div class="container">
+
+        <h1>Property details</h1>
+
+        <h3 id="number_of_registed_land"></h3>
+
+<!--
+        <label for="user_address" class="control-label">User Address</label>
+        <input id="user_address" type="text">
+        <br>
+        <button class="btn" id="button">Get Details</button>
+-->
+    </div>
+
+    <div>
+        <table class="table" id="detail-table">
+
+        </table>
+    </div>
+
+    <script>
+
+        LandContract.getNumberOfLandRegistered(function(error, result){
+            if(!error)
+                {
+                    $("#number_of_registed_land").html(result+' Land Registered');
+                    console.log(result);
+                }
+            else
+                console.error(error);
+        });
+
+//        $("#button").click(function() {
+            var x = LandContract.get_property("{{account_address}}");
+            $("#detail-table").html(
+                `<tr>
+                <th>Land Id</th>
+                <th>Name</th>
+                <th>City</th>
+                <th>Area</th>
+                <th>Address</th>
+                <th>Latitude</th>
+                <th>Longitude</th>
+            </tr>`);
+            console.log(x);
+            for(i in x){
+                var temp = LandContract.landList(x[i].c[0]);
+//                console.log(temp);
+                var markup = `<tr>
+                    <td>${temp[0]}</td>
+                    <td>${temp[2]}</td>
+                    <td>${temp[3]}</td>
+                    <td>${temp[4]}</td>
+                    <td>${temp[5]}</td>
+                    <td>${temp[6]}</td>
+                    <td>${temp[7]}</td>
+                    <td>
+            <a class="button large" href="/land-details/${x[i]}" target="">Sell</a>
+            </td>
+                            </tr>`;
+                $("#detail-table").append(markup);
+//            console.log(x[i].c[0]);
+
+            }
+//        });
+
+    </script>
+
+{% endblock %}
+

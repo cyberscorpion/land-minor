@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+
+
+   {% block content %}
+
+    <div class="container">
+
+        <h1>Property details</h1>
+
+        <h3 id="number_of_registed_land"></h3>
+
+<form action="/first-bid/" method="POST">
+    {%csrf_token %}
+    <label for="land_id" class="control-label">Land Id</label>
+    <input type="text" readonly value="" name="land_id" id="land_id">
+
+    <label for="account_address" class="control-label">Account Address</label>
+    <input type="text" readonly value="" name="account_address" id="account_address">
+
+    <label for="name" class="control-label">Name</label>
+    <input type="text" readonly value="" name="name" id="name">
+
+    <label for="city" class="control-label">City</label>
+    <input type="text" readonly value="" name="city" id="city">
+
+    <label for="area" class="control-label">Area</label>
+    <input type="text" readonly value="" name="area" id="area">
+
+    <label for="address" class="control-label">Address</label>
+    <input type="text" readonly value="" name="address" id="address">
+
+    <label for="latitude" class="control-label">Latitude</label>
+    <input type="text" readonly value="" name="latitude" id="latitude">
+
+    <label for="longitude" class="control-label">Longitude</label>
+    <input type="text" readonly value="" name="longitude" id="longitude">
+    <br>
+    <button class="btn btn-primary" type="submit">Go to Bid</button>
+</form>
+<!--
+        <label for="user_address" class="control-label">User Address</label>
+        <input id="user_address" type="text">
+        <br>
+        <button class="btn" id="button">Get Details</button>
+-->
+    </div>
+
+    <div>
+        <table class="table" id="detail-table">
+
+        </table>
+    </div>
+
+    <script>
+
+        LandContract.getNumberOfLandRegistered(function(error, result){
+            if(!error)
+                {
+                    $("#number_of_registed_land").html(result+' Land Registered');
+                    console.log(result);
+                }
+            else
+                console.error(error);
+        });
+                var temp = LandContract.landList("{{land_number}}");
+
+                $("#land_id").val(temp[0]) ;
+                $("#account_address").val(temp[1]) ;
+                $("#name").val(temp[2]) ;
+                $("#city").val(temp[3]) ;
+                $("#area").val(temp[4]) ;
+                $("#address").val(temp[5]) ;
+                $("#latitude").val(temp[6]) ;
+                $("#longitude").val(temp[7]) ;
+
+    </script>
+
+{% endblock %}
+

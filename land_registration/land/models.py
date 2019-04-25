@@ -35,7 +35,7 @@ class Bid(models.Model):
     value = models.PositiveIntegerField()
     account = models.CharField(max_length=100)
     buyer = models.BooleanField(default = True)
-    itter = models.PositiveIntegerField(default = 0)
+    itter = models.PositiveIntegerField(default = 1)
     message = models.TextField(null = True, blank = True)
     timestamp = models.DateTimeField(auto_now=True, null=True, blank=True)
     days = models.PositiveIntegerField(default = 30)

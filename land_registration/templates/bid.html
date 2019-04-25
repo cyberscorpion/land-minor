@@ -6,17 +6,24 @@
 
         <h3 id="">Bid Land</h3>
            <p>
-            Owner Price: {{land.price}}
+          {% if bid_land_obj.buyer %}
+            Owner Price: {{bid_land_obj.price}}
             <br>
-            Token Money: {{land.token_money}}
+            Token Money: {{bid_land_obj.token_money}}
                <br>
-            Days to pay money: {{land.days}}
+            Days to pay money: {{bid_land_obj.days}}
             <br>
-            Itteration: {{land.itter}}
+            {% else %}
+            You are owner of this land.
+            <br>
+            {% endif %}
+            Itteration: {{bid_land_obj.itter}}
         </p>
 
-        {% if land.itter > 1 %}
+        {% if bid_land_obj.itter > 1 %}
+           {% if bid_land_obj.buyer %}
             Suggestion: {{suggestion}}
+            {% endif %}
             <br>
             <br>
             <h5><strong>Previous bid:</strong></h5>
@@ -31,9 +38,9 @@
         <label for="address">Address</label>
         <input type="text" name = "address" id="address" readonly value = {{bidder_address}}>
         <label for="itter">Itteration</label>
-        <input type="text" name = "itter" id="itter" readonly value = {{land.itter}}>
+        <input type="text" name = "itter" id="itter" readonly value = {{bid_land_obj.itter}}>
 <label for="=id">Bid Id</label>
-        <input type="text" name = "id" id="id" readonly value = {{land.id}}>
+        <input type="text" name = "id" id="id" readonly value = {{bid_land_obj.id}}>
 
         <label for="value">Value</label>
         <input type="number" id="value" name = "value">

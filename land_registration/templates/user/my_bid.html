@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+
+   {% block content %}
+
+
+    <div>
+       <h3>Lands</h3>
+                <table class="table" id="detail-table">
+           <tr>
+<!--                <th>Is My land</th>-->
+                <th>Owner Name</th>
+                <th>City</th>
+                <th>Area</th>
+                <th>Land Address</th>
+                <th>Latitude</th>
+                <th>Longitude</th>
+                <th>Current Itter</th>
+            </tr>
+           {% for bid_land in bid_land_obj %}
+           <tr>
+            <td>{{bid_land.land.name}} </td>
+            <td>{{bid_land.land.city}} </td>
+            <td>{{bid_land.land.area}} </td>
+            <td>{{bid_land.land.land_address}} </td>
+            <td>{{bid_land.land.latitude}} </td>
+            <td>{{bid_land.land.longitude}} </td>
+            <td>{{bid_land.itter}} </td>
+            </tr>
+           {% endfor %}
+        </table>
+        <h3>Bids</h3>
+        <table class="table" id="detail-table">
+           <tr>
+                <th>Is My land</th>
+                <th>Land</th>
+                <th>Bid Amound</th>
+                <th>Days to pay money</th>
+                <th>Token Money</th>
+                <th>itter</th>
+                <th>Message</th>
+            </tr>
+           {% for bid_obj in bid_objects%}
+           <tr>
+            <td>
+            {% if bid_obj.buyer %}
+                No
+            {% else %}
+                Yes
+            {% endif %}
+            </td>
+            <td>{{bid_obj.bid_land.land.land_address}} </td>
+            <td>{{bid_obj.value}} </td>
+            <td>{{bid_obj.days}} </td>
+            <td>{{bid_obj.token_money}} </td>
+            <td>{{bid_obj.itter}} </td>
+            <td>{{bid_obj.message}} </td>
+            </tr>
+           {% endfor %}
+        </table>
+
+
+
+    </div>
+
+{% endblock %}
+
