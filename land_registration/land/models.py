@@ -21,7 +21,7 @@ class BidLand(models.Model):
     owner = models.CharField(max_length=100)
     timestamp = models.DateTimeField(auto_now=True, null=True, blank=True)
     itter = models.PositiveIntegerField(default = 1)
-    active = models.BooleanField(default = False)
+    locked = models.BooleanField(default = False)
     sell_to = models.CharField(max_length=100, null = True, blank = True)
     selling_value = models.PositiveIntegerField(null = True, blank = True)
     days = models.PositiveIntegerField(default = 30)
@@ -40,4 +40,5 @@ class Bid(models.Model):
     timestamp = models.DateTimeField(auto_now=True, null=True, blank=True)
     days = models.PositiveIntegerField(default = 30)
     token_money = models.PositiveIntegerField(default = 0)
+    locked = models.BooleanField(default = False)
 

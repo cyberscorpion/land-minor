@@ -201,7 +201,6 @@ def save_first_bid(request):
             land = land_obj,
             price = value,
             owner = bidder_address,
-            active = True,
             days = days,
             token_money = token_money
         )
@@ -247,10 +246,25 @@ def increase_iter(request, pk):
     context = {}
     bid_land_obj = BidLand.objects.filter(id = pk)
     if bid_land_obj.exists():
+
         bid_land_obj = bid_land_obj.first()
         bid_land_obj.itter += 1
         x = bid_land_obj.itter
         bid_land_obj.save()
+        bids = bid_land_obj.bidlands.filter(itter = bid_land_obj.itter -1)
+        for bid in bids:
+            Bid.objects.create(
+                bid_land = bid.bid_land,
+                value = bid.value,
+                account = bid.account,
+                buyer = bid.buyer,
+                itter = bid.itter+1,
+                days = bid.days,
+                token_money = bid.token_money
+            )
+            bid.locked = True
+            bid.save()
+
         context['message'] = f'Iteration increased to {x}'
     else:
         context['message'] = "Object not found"

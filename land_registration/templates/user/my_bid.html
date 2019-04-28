@@ -15,7 +15,8 @@
                 <th>Land Address</th>
                 <th>Latitude</th>
                 <th>Longitude</th>
-                <th>Current Itter</th>
+                <th>Current Iter.</th>
+                <th></th>
             </tr>
            {% for bid_land in bid_land_obj %}
            <tr>
@@ -26,6 +27,11 @@
             <td>{{bid_land.land.latitude}} </td>
             <td>{{bid_land.land.longitude}} </td>
             <td>{{bid_land.itter}} </td>
+            <td>
+            {% if bid_land.locked == False %}
+            <a href="/bid/{{bid_land.land.land_id}}" class="btn btn-primary">Change Bid</a>
+            {% endif %}
+            </td>
             </tr>
            {% endfor %}
         </table>
@@ -37,11 +43,18 @@
                 <th>Bid Amound</th>
                 <th>Days to pay money</th>
                 <th>Token Money</th>
-                <th>itter</th>
-                <th>Message</th>
+                <th>Iter</th>
+                <th>Status</th>
+                <th></th>
             </tr>
            {% for bid_obj in bid_objects%}
-           <tr>
+           <tr
+           {% if bid_obj.locked %}
+           class="table-danger"
+           {% else %}
+           class="table-success"
+           {% endif %}
+           >
             <td>
             {% if bid_obj.buyer %}
                 No
@@ -54,12 +67,20 @@
             <td>{{bid_obj.days}} </td>
             <td>{{bid_obj.token_money}} </td>
             <td>{{bid_obj.itter}} </td>
-            <td>{{bid_obj.message}} </td>
+            <td>{% if bid_obj.locked %}
+                Locked
+                {% else %}
+                Active
+            {% endif %}
+            </td>
+            <td>
+            {% if bid_obj.locked == False %}
+            <a href="/bid/{{bid_obj.bid_land.land.land_id}}" class="btn btn-primary">Change Bid</a>
+            {% endif %}
+            </td>
             </tr>
            {% endfor %}
         </table>
-
-
 
     </div>
 
