@@ -8,7 +8,7 @@
        <h3>Lands</h3>
                 <table class="table" id="detail-table">
            <tr>
-<!--                <th>Is My land</th>-->
+                <th>Is My land</th>
                 <th>Owner Name</th>
                 <th>City</th>
                 <th>Area</th>
@@ -19,7 +19,19 @@
                 <th></th>
             </tr>
            {% for bid_land in bid_land_obj %}
-           <tr>
+           <tr
+           {% if bid_land.locked %}
+           class="table-danger"
+           {% else %}
+           class="table-success"
+           {% endif %}
+           >
+           <td>{% if request.user.account_address == bid_land.owner %}
+               Yes
+               {% else %}
+               No
+               {% endif %}
+           </td>
             <td>{{bid_land.land.name}} </td>
             <td>{{bid_land.land.city}} </td>
             <td>{{bid_land.land.area}} </td>

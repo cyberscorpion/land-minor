@@ -5,8 +5,21 @@
 
     <div class="container">
 
-        <h1>{{message}}</h1>
+        <h3>{{message}}</h3>
+        <p>{{detail}}</p>
 
 </div>
 
+
+<script>
+if({{do_transaction}}){
+    console.log('Yes');
+
+            LandContract.change_ownership({{land_id}},"{{seller}}","{{address}}","{{name}}",{from: web3.eth.accounts[0], gas:3000000} );
+            console.log("Land Ownership transfered.");
+}
+else{
+    console.log('No');
+}
+</script>
 {% endblock %}

@@ -35,24 +35,6 @@
 		"constant": false,
 		"inputs": [
 			{
-				"name": "_x",
-				"type": "uint256"
-			},
-			{
-				"name": "_value",
-				"type": "uint256"
-			}
-		],
-		"name": "add_land_available_to_sell",
-		"outputs": [],
-		"payable": false,
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"constant": false,
-		"inputs": [
-			{
 				"name": "_owner_address",
 				"type": "address"
 			},
@@ -65,6 +47,37 @@
 		"outputs": [],
 		"payable": false,
 		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_x",
+				"type": "uint256"
+			},
+			{
+				"name": "_oldOwner",
+				"type": "address"
+			},
+			{
+				"name": "_newOwner",
+				"type": "address"
+			},
+			{
+				"name": "_name",
+				"type": "string"
+			}
+		],
+		"name": "change_ownership",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256[]"
+			}
+		],
+		"payable": true,
+		"stateMutability": "payable",
 		"type": "function"
 	},
 	{
@@ -159,20 +172,6 @@
 	},
 	{
 		"constant": true,
-		"inputs": [],
-		"name": "get_land_availabe_to_sell",
-		"outputs": [
-			{
-				"name": "",
-				"type": "uint256[]"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"constant": true,
 		"inputs": [
 			{
 				"name": "_address",
@@ -212,25 +211,6 @@
 			{
 				"name": "",
 				"type": "uint256[]"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"constant": true,
-		"inputs": [
-			{
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"name": "land_availabe_to_sell",
-		"outputs": [
-			{
-				"name": "",
-				"type": "uint256"
 			}
 		],
 		"payable": false,
@@ -288,9 +268,10 @@
 		"stateMutability": "view",
 		"type": "function"
 	}
-]        );
+]
+        );
          
-var LandContract = CoursetroContract.at('0xda55f5789d84dd85908cd5eca008bff77119724d');
+var LandContract = CoursetroContract.at('0x2bd95325e9f148252cb877e82aa6d57058cbe5e5');
         console.log(LandContract);
          
     </script>
@@ -311,7 +292,7 @@ var LandContract = CoursetroContract.at('0xda55f5789d84dd85908cd5eca008bff771197
             </div>
 
             <ul class="list-unstyled components">
-                <p>Welcome</p>
+                <p>Welcome {% if user.is_authenticated %} , {{user.name}} - {{user.username}} {% endif %}</p>
                 <li>
                     <a href="#">About</a>
                     <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Extra</a>

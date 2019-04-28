@@ -21,7 +21,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_active = models.BooleanField(_('active'), default=True)
     is_staff = models.BooleanField(_('staff'), default = True)
     objects = UserManager()
-    max_bid = models.PositiveIntegerField(default = 300000)
+    budget = models.PositiveIntegerField(default = 300000)
     USERNAME_FIELD = 'username'
 #    REQUIRED_FIELDS = ['email',]
 

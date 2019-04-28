@@ -18,7 +18,7 @@ urlpatterns = [
     url(r'^increase-iter/(?P<pk>\d+)/$',increase_iter       ,name="increase_iter"),
 
     url(r'^lands-available/$',lands_available       ,name="lands_available"),
-    url(r'^add-land-available-to-sell/(?P<pk>\d+)/$',add_land_available_to_sell       ,name="add_land_available_to_sell"),
+#    url(r'^add-land-available-to-sell/(?P<pk>\d+)/$',add_land_available_to_sell       ,name="add_land_available_to_sell"),
     url(r'^land-details/(?P<pk>\d+)/$',land_details       ,name="land_details"),
     url(r'^bid/home/$',lands_available_db       ,name="lands_available_db"),
     url(r'^bid/save-first-bid/$',save_first_bid       ,name="save_first_bid"),

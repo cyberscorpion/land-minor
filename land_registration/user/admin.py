@@ -23,6 +23,7 @@ class UserAdmin(BaseUserAdmin):
         (None, {'fields': ('email', 'password','username')}),
         ('Personal info', {'fields': ('name',
                                       'account_address',
+                                      'budget',
                                     )}),
         ('Permissions', {'fields': ('is_staff',
                                     'is_active',
@@ -39,6 +40,6 @@ class UserAdmin(BaseUserAdmin):
     search_fields = ('email',)
     ordering = ('email',)
     filter_horizontal = ()
-
+    list_display = ('name','username','account_address')
 
 admin.site.register(User, UserAdmin)

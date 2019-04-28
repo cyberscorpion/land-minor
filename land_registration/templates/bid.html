@@ -41,7 +41,7 @@
         <input type="text" name = "address" id="address" readonly value = {{bidder_address}}>
         <label for="itter">Itteration</label>
         <input type="text" name = "itter" id="itter" readonly value = {{bid_land_obj.itter}}>
-<label for="=id">Bid Id</label>
+<label for="=id">Bid Land Id</label>
         <input type="text" name = "id" id="id" readonly value = {{bid_land_obj.id}}>
 
         <label for="value">Value</label>
@@ -50,6 +50,8 @@
         <input type="number" id="token_money" name = "token_money">
         <label for="days">Days</label>
         <input type="number" id="days" name = "days">
+        <input type="number" name = "owner_days" value="{{bid_land_obj.days}}" hidden>
+        <input type="number" name = "previous_value" value="{{previous_bid.value}}" hidden>
 
         <button class="btn btn-success" type="submit" id="register_button">Bid</button>
         </form>
