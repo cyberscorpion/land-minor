@@ -21,7 +21,7 @@ def dashboard_home(request):
 
 def load_data(request):
     if request.method == 'POST':
-        print(request.POST.get('data'))
+#        print(request.POST.get('data'))
         x = json.loads(request.POST.get('data'))
         for i in x:
             print(i[0])
@@ -49,29 +49,44 @@ def land_details(request,pk):
     return render(request, 'user/land_details.html',context)
 
 def optimization(bid_land_obj, account_address):
-    objects = bid_land_obj.bidlands.filter(itter = bid_land_obj.itter -1)
-    owner_obj = objects.get(buyer = False)
-    buyer_obj = objects.filter(buyer = True)
+    objects = list(bid_land_obj.bidlands.filter(itter = bid_land_obj.itter -1))
+    price_list = [obj.value for obj in objects]
+    days_list = [obj.days for obj in objects]
+    token_money_list = [obj.token_money for obj in objects]
+    n_diff = 10
+    min_price = min(price_list)
+    max_price = max(price_list)
+    min_days = min(days_list)
+    max_days = max(days_list)
+    min_token_money = min(token_money_list)
+    max_token_money = max(token_money_list)
+
+    for obj in objects:
+        obj.n_price = (obj.value-min_price)*n_diff/(max_price-min_price)
+        obj.n_days = (obj.days-min_days)*n_diff/(max_days-min_days)
+        obj.n_token_money = (obj.token_money-min_token_money)*n_diff/(max_token_money-min_token_money)
+
+        if obj.buyer == False:
+            owner_obj = obj
+
+    objects.remove(owner_obj)
+
+    buyer_obj = objects
     return_text ="Error"
     result = []
     for obj in buyer_obj:
-        value_diff = owner_obj.value - obj.value
-        # make the value diff 0 if bid is higher than then required
-        if value_diff < 0:
-            value_diff = 0
-        days_diff = owner_obj.days - obj.days
-        if days_diff > 0:
-            days_diff = 0
-        token_money_diff = owner_obj.token_money - obj.token_money
-        if token_money_diff > 0:
-            token_money_diff = 0
-        result.append((obj.account, math.sqrt((value_diff)**2)))
+        value_diff = owner_obj.n_price - obj.n_price
+        days_diff = owner_obj.n_days - obj.n_days
+        token_money_diff = owner_obj.n_token_money - obj.n_token_money
+#        print(value_diff, days_diff, token_money_diff)
+        result.append((obj.account, math.sqrt((value_diff**2)+(days_diff**2)+(token_money_diff**2))))
+
     result.sort(key = lambda x : x[1])
     print(result)
     if result[0][0]!=account_address:
-        return_text = "You should increase your bid."
+        return_text = "You should increase your bidding values."
     else:
-        return_text = "You can decrease your bid."
+        return_text = "You can decrease your bidding values."
     return return_text
 
 @login_required(login_url='/user/login')
@@ -87,7 +102,7 @@ def bidding(request,pk):
         context['bid_land_obj'] = bid_land_obj
         if bid_land_obj.itter > 1:
             context['suggestion'] = optimization(bid_land_obj, request.user.account_address)
-            context['previous_bid'] = bid_land_obj.bidlands.get(itter = bid_land_obj.itter -1, account = request.user.account_address)
+            context['previous_bid'] = bid_land_obj.bidlands.filter(account = request.user.account_address).order_by('-itter')[0]
     return render(request, 'bid.html',context)
 
 @login_required(login_url='/user/login')
@@ -177,7 +192,7 @@ def save_first_bid(request):
         land_obj = Land.objects.get(land_id = request.POST.get('land_id'))
 #        print(bid_land_obj,request.POST.get('value'), request.POST.get('address'), request.POST.get('itter'))
         bidder_address = request.POST.get('bidder_address')
-        print(bidder_address)
+#        print(bidder_address)
         days =  request.POST.get('days')
         token_money =  request.POST.get('token_money')
         value =  request.POST.get('value')
@@ -219,3 +234,24 @@ def my_bid(request):
     context['bid_objects'] = bid_obj
     context['bid_land_obj'] = bid_land_obj
     return render(request, 'user/my_bid.html', context)
+
+def all_bid_iter(request):
+    bid_lands = BidLand.objects.all()
+    context={
+        'bid_lands':bid_lands
+    }
+    return render(request, 'all_bid_iter.html',context)
+
+
+def increase_iter(request, pk):
+    context = {}
+    bid_land_obj = BidLand.objects.filter(id = pk)
+    if bid_land_obj.exists():
+        bid_land_obj = bid_land_obj.first()
+        bid_land_obj.itter += 1
+        x = bid_land_obj.itter
+        bid_land_obj.save()
+        context['message'] = f'Iteration increased to {x}'
+    else:
+        context['message'] = "Object not found"
+    return render(request, "message.html", context)

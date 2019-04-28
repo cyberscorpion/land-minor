@@ -14,6 +14,9 @@ urlpatterns = [
     url(r'^first-bid/$',first_bid       ,name="first_bid"),
     url(r'^my-bid/$',my_bid       ,name="my_bid"),
 
+    url(r'^all-bid-iter/$',all_bid_iter       ,name="all_bid_iter"),
+    url(r'^increase-iter/(?P<pk>\d+)/$',increase_iter       ,name="increase_iter"),
+
     url(r'^lands-available/$',lands_available       ,name="lands_available"),
     url(r'^add-land-available-to-sell/(?P<pk>\d+)/$',add_land_available_to_sell       ,name="add_land_available_to_sell"),
     url(r'^land-details/(?P<pk>\d+)/$',land_details       ,name="land_details"),

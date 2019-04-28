@@ -6,22 +6,24 @@
 
         <h3 id="">Bid Land</h3>
            <p>
-          {% if bid_land_obj.buyer %}
+          {% if bid_land_obj.owner == bidder_address %}
+            You are owner of this land.
+            <br>
+            {% else %}
+
             Owner Price: {{bid_land_obj.price}}
             <br>
             Token Money: {{bid_land_obj.token_money}}
                <br>
             Days to pay money: {{bid_land_obj.days}}
             <br>
-            {% else %}
-            You are owner of this land.
             <br>
             {% endif %}
             Itteration: {{bid_land_obj.itter}}
         </p>
 
         {% if bid_land_obj.itter > 1 %}
-           {% if bid_land_obj.buyer %}
+           {% if bid_land_obj.owner != bidder_address %}
             Suggestion: {{suggestion}}
             {% endif %}
             <br>
