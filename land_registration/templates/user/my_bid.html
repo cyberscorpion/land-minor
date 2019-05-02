@@ -7,7 +7,7 @@
     <div>
        <h3>Lands</h3>
                 <table class="table" id="detail-table">
-           <tr>
+            <tr>
                 <th>Is My land</th>
                 <th>Owner Name</th>
                 <th>City</th>
@@ -42,6 +42,8 @@
             <td>
             {% if bid_land.locked == False %}
             <a href="/bid/{{bid_land.land.land_id}}" class="btn btn-primary">Change Bid</a>
+            {% else %}
+             <a href="/graph/{{bid_land.id}}" class="btn btn-primary">Graph</a>
             {% endif %}
             </td>
             </tr>

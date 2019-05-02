@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+
+   {% block content %}
+
+    <div class="container">
+
+        <h3>Your current budget is: {{budget}}</h3>
+
+    </div>
+
+    <form action="" method="post">
+      {% csrf_token %}
+       <label for="budget">New Budget</label>
+        <input type="number" id="budget" name="budget" >
+        <button class="btn btn-primary" type="submit">Update</button>
+    </form>
+{% endblock %}

@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from user.models import User
+from random import randint
 import json
 import math
 from .models import *
@@ -70,23 +71,23 @@ def optimization(bid_land_obj, itter):
     diff_price = 1 if diff_price == 0 else diff_price
     diff_days = 1 if diff_days == 0 else diff_days
     diff_token_money = 1 if diff_token_money == 0 else diff_token_money
-    print(diff_token_money)
+#    print(diff_token_money)
     for obj in objects:
         obj.n_price = (obj.value-min_price)*n_diff/(diff_price)
         obj.n_days = (obj.days-min_days)*n_diff/(diff_days)
         obj.n_token_money = (obj.token_money-min_token_money)*n_diff/(diff_token_money)
-        print(obj.n_price, obj.n_days, obj.n_token_money)
+#        print(obj.n_price, obj.n_days, obj.n_token_money)
         if obj.buyer == False:
             owner_obj = obj
-    print("")
-    print(owner_obj.n_price, owner_obj.n_days, owner_obj.n_token_money)
-    print("")
+#    print("")
+#    print(owner_obj.n_price, owner_obj.n_days, owner_obj.n_token_money)
+#    print("")
     objects.remove(owner_obj)
 
     buyer_obj = objects
 #    return_text ="Error"
     result = []
-    print("")
+#    print("")
     for obj in buyer_obj:
         value_diff = owner_obj.n_price - obj.n_price
         days_diff = owner_obj.n_days - obj.n_days
@@ -95,7 +96,7 @@ def optimization(bid_land_obj, itter):
         result.append((obj.account, math.sqrt((value_diff**2)+(days_diff**2)+(token_money_diff**2))))
 
     result.sort(key = lambda x : x[1])
-    print(result)
+#    print(result)
     return result
 
 
@@ -122,6 +123,7 @@ def bidding(request,pk):
 
 @login_required(login_url='/user/login')
 def save_bid(request):
+    context={}
     if request.method == 'POST':
         context ={}
         bid_land_obj = BidLand.objects.get(id = request.POST.get('id'))
@@ -135,7 +137,7 @@ def save_bid(request):
         previous_value =  request.POST.get('previous_value')
         print("previous: ",previous_value)
         if previous_value:
-            if abs(int(preevious_value)-int(value))<10:
+            if abs(int(previous_value)-int(value))<10:
                 return render(request,'error.html',{'detail': "You cannot change your bid by less than 10 factor."})
         if int(value) > request.user.budget:
             return render(request,'error.html',{'detail': "You cannot bid higher than your budget."})
@@ -315,3 +317,114 @@ def increase_iter(request, pk):
     else:
         context['message'] = "Object not found"
     return render(request, "message.html", context)
+
+
+def auto_bid(request, pk):
+    context = {}
+    bid_land_obj = BidLand.objects.filter(id = pk)
+    if bid_land_obj.exists():
+        bid_land_obj = bid_land_obj.first()
+        x_count = 1
+        while(bid_land_obj.locked == False and x_count < 300):
+            print("itter:" ,x_count)
+
+            bid_land_obj.itter += 1
+            x = bid_land_obj.itter
+            bid_land_obj.save()
+            bids = bid_land_obj.bidlands.filter(itter = bid_land_obj.itter -1)
+            for bid in bids:
+
+                rand_price_inc = bid.value + randint(100, 10000)
+                if rand_price_inc > request.user.budget:
+                    if bid.value + 100 <= request.user.budget:
+                        rand_price_inc = request.user.budget
+                    else:
+                        rand_price_inc = bid.value
+
+                Bid.objects.create(
+                    bid_land = bid.bid_land,
+                    value = rand_price_inc,
+                    account = bid.account,
+                    buyer = bid.buyer,
+                    itter = bid.itter+1,
+                    days = bid.days,
+                    token_money = bid.token_money
+                )
+                bid.locked = True
+                bid.save()
+
+            result1 = optimization(bid_land_obj, bid_land_obj.itter)
+            result2 = optimization(bid_land_obj, bid_land_obj.itter-1)
+
+            if result1[0][0]==result2[0][0]:
+                context['detail'] = "Iteration Ends"
+                bid_land_obj.locked = True
+                bid_land_obj.save()
+                bids = bid_land_obj.bidlands.filter(itter = bid_land_obj.itter)
+                for bid in bids:
+                    bid.locked = True
+                    bid.save()
+                context['message'] = f"Land will be transfered to {result1[0][0]}"
+                context['do_transaction'] = "true"
+                context['land_id'] = bid_land_obj.land.land_id
+                context['seller'] = bid_land_obj.land.address
+                context['address'] = result1[0][0]
+                print(result1[0][0])
+                user_obj = User.objects.get(account_address = result1[0][0])
+                context['name'] = user_obj.name
+                print("land will be transfered to", user_obj.name)
+                return render(request, "message.html", context)
+                break
+
+            x_count+=1
+        context['message'] = 'Interations more than usual'
+
+    else:
+        context['message'] = "Object not found"
+    return render(request, "message.html", context)
+
+class GraphUser:
+    name = ""
+    value = []
+
+def graph(request, pk):
+    context = {}
+    bid_land_obj = BidLand.objects.filter(id = pk)
+    if bid_land_obj.exists():
+
+        data = []
+        bid_land_obj = bid_land_obj.first()
+        itter = bid_land_obj.itter
+        user = {}
+        bids = bid_land_obj.bidlands.filter(itter = 1)
+        for bid in bids:
+            if bid.buyer == False:
+                continue
+            user[bid.account]=[bid.value]
+
+        for i in range(2,itter+1):
+            bids = bid_land_obj.bidlands.filter(itter = i)
+            for bid in bids:
+                if bid.buyer == False:
+                    continue
+                user[bid.account].append(bid.value)
+
+        for key in user:
+            user_obj = User.objects.get(account_address = key)
+            graph_user = GraphUser()
+            graph_user.name = user_obj.name
+            graph_user.value = user[key]
+            data.append(graph_user)
+        context['data'] = data
+
+    return render(request, "graph.html", context)
+
+
+def set_budget(request):
+    context = {}
+    if request.method == 'POST':
+        user = request.user
+        user.budget = request.POST.get('budget')
+        user.save()
+    context['budget'] = request.user.budget
+    return render(request, 'set_budget.html',context)

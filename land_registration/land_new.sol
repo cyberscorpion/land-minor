@@ -17,7 +17,7 @@ contract land_bargain {
     
     mapping(address => uint[]) owner_properties;
 
-    uint[] public land_availabe_to_sell;
+    // uint[] public land_availabe_to_sell;
     
     function add_property(address _owner_address, uint _x) public {
         owner_properties[_owner_address].push(_x);
@@ -26,15 +26,32 @@ contract land_bargain {
     function get_property(address _address) view public returns(uint[]){
         return owner_properties[_address];
     }
-    
-    function add_land_available_to_sell(uint _x, uint _value) public{
-        landList[_x].value = _value;
-        land_availabe_to_sell.push(_x);
+    function change_ownership(uint _x,address _oldOwner, address _newOwner, string _name) payable public returns(uint[]){
+        uint[] storage temp_arr;
+        for(uint i = 0; i < owner_properties[_oldOwner].length; i++) {
+            temp_arr.push(owner_properties[_oldOwner][i]);
+            // delete owner_properties[_oldOwner][i] ;
+        }
+        delete owner_properties[_oldOwner];
+        for(uint j = 0; j < temp_arr.length; j++) {
+            if(temp_arr[j] != _x){
+                 owner_properties[_oldOwner].push(temp_arr[j]);
+            }
+        }
+        landList[_x].owner = _newOwner;
+        landList[_x].name = _name;
+        owner_properties[_newOwner].push(_x);
+        return temp_arr;
     }
     
-    function get_land_availabe_to_sell() view public returns(uint[]){
-        return land_availabe_to_sell;
-    }
+    // function add_land_available_to_sell(uint _x, uint _value) public{
+    //     landList[_x].value = _value;
+    //     land_availabe_to_sell.push(_x);
+    // }
+    
+    // function get_land_availabe_to_sell() view public returns(uint[]){
+    //     return land_availabe_to_sell;
+    // }
     // State variables
     
     
